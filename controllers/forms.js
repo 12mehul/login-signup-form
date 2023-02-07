@@ -20,56 +20,32 @@ const createForm = async (req,res) => {
 };
 const getForm = async (req,res) => {
     try {
-        const { id: userID } = req.params;
-        const user = await User.findOne({ _id: userID });
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        
         if (!user) {
             return res
             .status(404)
-            .json({ msg: `User not available with the user id: ${userID}` });
+            .json({ msg: `User not available with the email id: ${ email }` });
         }
-        res.status(201).json({ user });
+        else{
+            const { password } = req.body;
+            console.log(password, user.password);
+            if (user.password !== password) {
+                return res
+                .status(404)
+                .json({ msg: `password is incorrect` });
+            }
+            res.status(201).json({ user });
+        }        
     }
     catch (err) {
         res.status(500).json({ msg: err });
     }
 };
-const updateForm = async (req,res) => {
-    try {
-        const { id: userID } = req.params;
-        const user = await User.findOneAndUpdate({ _id: userID }, req.body, {
-            new: true,
-            runValidators: true,
-        });
-        if (!user) {
-            return res
-            .status(404)
-            .json({ msg: `User not available with the user id: ${userID}` });
-        }
-        res.status(200).json({ user });
-    }
-    catch (err) {
-        res.status(500).json({ msg: err });
-    }
-};
-const deleteForm = async (req,res) => {
-    try {
-        const { id: userID } = req.params;
-        const user = await User.findOneAndDelete({ _id: userID });
-        if (!user) {
-            return res
-            .status(404)
-            .json({ msg: `User not available with the user id: ${userID}` });
-        }
-        res.status(200).json({ user });
-    }
-    catch (err) {
-        res.status(500).json({ msg: err });
-    }
-};
+
 module.exports = {
     getFormList,
     createForm,
-    getForm,
-    updateForm,
-    deleteForm
+    getForm
 };

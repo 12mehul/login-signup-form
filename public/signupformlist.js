@@ -9,7 +9,7 @@ async function showUsers() {
     try {
         const {
             data: { users },
-        } = await axios.get("/api/forms");
+        } = await axios.get("/api/forms/list");
         if (users.length < 1) {
             usersList.innerHTML = "<h3> No users available</h3>";
             return;
@@ -33,7 +33,7 @@ formSignup.addEventListener("submit", async (e) => {
     const email = userEmail.value;
     const password = userPassword.value;
     try {
-        await axios.post("/api/forms", { 
+        await axios.post("/api/forms/signup", { 
             username: username, 
             email: email,  
             password: password 
