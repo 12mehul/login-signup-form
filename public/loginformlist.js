@@ -1,32 +1,22 @@
 const formLogin = document.querySelector(".login-form");
+const emailInput = document.querySelector(".login-email");
+const passwordInput = document.querySelector(".login-password");
 const formAlert = document.querySelector(".form-alert");
 
 
 formLogin.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
- 
+    const email  = emailInput.value;
+    const password = passwordInput.value; 
     try {
-        const { email } = req.body.email;
-            await axios.get("/api/forms/login",{ 
-            email: email,
-            password: password
+            const result = await axios.post("/api/forms/login",{ 
+                email: email,
+                password: password
             })
-        
-            if (!email ) {
-                return res.send = ("email is invalid");
-            }
-            else {
-                const {password} = req.body.password; 
-                if (email.password !== password) {
-                    return res.send = ("Login is notsuccessfully");
-                } 
-                res.status(201).send("login success");
-            }       
-    
-            
-             
-        
+            console.log(result)
+            window.alert(`Successfully login...`); 
+            emailInput.value = "";
+            passwordInput.value = "";
             formAlert.innerHTML = `success it works!!`;
         }
     catch (err) {

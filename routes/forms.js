@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.route("/login").get(getForm);
+router.route("/login").post(getForm);
 router.route("/signup").post(createForm);
 router.route("/list").get(getFormList);
 
