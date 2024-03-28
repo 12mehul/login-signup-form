@@ -30,7 +30,7 @@ const getForm = async (req,res) => {
         }
         else{
             const { password } = req.body;
-            console.log(password, user.password);
+            //console.log(password, user.password);
             if (user.password !== password) {
                 return res
                 .status(404)
